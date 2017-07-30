@@ -63,7 +63,7 @@ for card in card_data['cardData']:
                           'rarity'      : rarity[card['rarityName']],
                           'ability'     : ability(card['description']),
                           'expansion'   : expansion[card['cardSetName']],
-                          'description' : card['description']}
+                          'description' : expansion_des.get(card['cardSetName']," ")}
              text      = minion_template%fill
         elif card['isSpell']:
              #spell_template
@@ -73,7 +73,7 @@ for card in card_data['cardData']:
                           'health'      : card['health'],
                           'rarity'      : rarity[card['rarityName']],
                           'expansion'   : expansion[card['cardSetName']],
-                          'description' : card['description']}
+                          'description' : expansion_des.get(card['cardSetName']," ")}
              text      = spell_template%fill
 
         elif card['isArtifact']:
@@ -84,7 +84,7 @@ for card in card_data['cardData']:
                           'health'      : card['health'],
                           'rarity'      : rarity[card['rarityName']],
                           'expansion'   : expansion[card['cardSetName']],
-                          'description' : card['description']}
+                          'description' : expansion_des.get(card['cardSetName']," ")}
              text      = artifact_template%fill
 
         if text:

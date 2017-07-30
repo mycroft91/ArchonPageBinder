@@ -7,12 +7,19 @@ rarity          = { 'Basic'     :'Basic',
                     'Epic'      :'|[[file:erarity.png|center]]',
                     'Legendary' :'|[[file:lrarity.png|center]]'}
 
+expansion_des   = { 'Core'               :'Core',
+                    "Shim'Zar"           :"[https://news.duelyst.com/duelyst-patch-1-71/ v. 1.71] - added with the [[Denizens of Shim'Zar]] expansion.",
+                    "Unearthed Prophecy" :"[https://news.duelyst.com/unearthed-prophecy-live/ v. 1.87] - added with the [[Unearthed Prophecy]] expansion.",
+                    "Bloodbound"         :"[https://news.duelyst.com/rise-of-the-bloodborn-duelyst-patch-1-78/ v. 1.78] - added with the [[Rise of the Bloodborn]] expansion",
+                    "Ancient Bonds"      :"[https://news.duelyst.com/duelyst-patch-1-81/ v. 1.81] - added with the [[Ancient Bonds]] expansion.",
+                    "Gauntlet Specials"  :"[https://news.duelyst.com/duelyst-patch-1-85/ v 1.85] - added with [[Gauntlet Specials]]"}
+
 expansion       = { 'Core'               :'Core',
                     "Shim'Zar"           :"[[Shim'Zar]]",
                     "Unearthed Prophecy" :"[[Unearthed Prophecy]]",
                     "Bloodbound"         :"[[Rise of the Bloodbound]]",
                     "Ancient Bonds"      :"[[Ancient Bonds]]",
-                    "Gauntlet Specials"  :"[[Gauntlet Specials]]"}
+                    "Gauntlet Specials"  :"[[Gauntlet Specials]]" }
 
 faction         = { 'Lyonar Kingdoms'    :'[[Lyonar]]',
                     'Songhai Empire'     :'[[Songhai]]',
@@ -73,13 +80,13 @@ minion_template = """{{Template:Cardinfo}}
 |-
 |}
 
-==Abilities==
-%(description)s
+
 
 ==Balance Changes==
+%(description)s
 
 
--ArchonBot
+<!-- ArchonBot -->
 """
 
 artifact_template = """{{Template:Cardinfo}}
@@ -104,13 +111,11 @@ artifact_template = """{{Template:Cardinfo}}
 |-
 |}
 
-==Abilities==
+==Balance Changes==
 %(description)s
 
-==Balance Changes==
 
-
--ArchonBot
+<!-- ArchonBot -->
 """
 
 spell_template   = """{{Template:Cardinfo}}
@@ -132,13 +137,11 @@ spell_template   = """{{Template:Cardinfo}}
 |-
 |}
 
-==Abilities==
+==Balance Changes==
 %(description)s
 
-==Balance Changes==
 
-
--ArchonBot
+<!-- ArchonBot -->
 """
 #This forces bot resets
 
