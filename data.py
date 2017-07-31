@@ -1,8 +1,8 @@
 #Author: Mycroft92
 #Date  : 21-July-2017
-#this is used to sub for the rarity image correspondingly. Basic and common dont have an image on wiki
+#this is used to sub for the rarity image correspondingly. Basic doesnt have an image on wiki
 rarity          = { 'Basic'     :'Basic',
-                    'Common'    :'Common',
+                    'Common'    :'|[[file:crarity.png|center]]',
                     'Rare'      :'|[[file:rrarity.png|center]]',
                     'Epic'      :'|[[file:erarity.png|center]]',
                     'Legendary' :'|[[file:lrarity.png|center]]'}

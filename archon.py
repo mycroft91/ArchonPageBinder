@@ -23,10 +23,18 @@ except Exception as e:
     raise (type(e),e.args)
 
 try:
-    site             = mwclient.Site('duelyst.gamepedia.com',path='/')
+    #load user, pass file
+    p               = open("config.txt",'r').readlines()
+    user            = p[0][5:].strip()
+    password        = p[1][5:].strip()
+except Exception as e:
+    logging.error(str(e))
+    raise (type(e),e.args)
+try:
+    site            = mwclient.Site('duelyst.gamepedia.com',path='/')
     logging.info("[*]Connected to  duelyst.gamepedia.com ")
-    site.force_login = False
-    logging.info("[*]Setting anonymous edit mode for the bot.")
+    site.login(user,password)
+    logging.info("[*]Logged in with bot credentials from config.txt.")
 except Exception as e:
     logging.error(str(e))
     raise (type(e),e.args)
@@ -93,7 +101,7 @@ for card in card_data['cardData']:
                 pages_created.write(card_link+"\n")
                 logging.info("[*]Successfully created page: "+card_link)
                 successful  +=1
-                time.sleep(10)
+                
             else:
                 pages_failed.write(card_link+"\n")
         nexisting_cnt += 1
