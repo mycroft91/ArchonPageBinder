@@ -7,6 +7,7 @@ import urllib2
 from data import *
 import logging
 import time
+from itertools import islice
 
 ##logger settings
 logging.basicConfig(filename="Archon.log", level=logging.INFO,filemode='w')
@@ -60,6 +61,13 @@ for card in card_data['cardData']:
         logging.info("[*]Page exists for :"+ card['name'])
         existing_cnt  += 1
     else:
+        if page.exists: #this is needed else latest_rev might throw IndexError if page is not present
+            latest_rev = "Mycroft92"
+            for rev in islice(page.revisions(),1):
+                latest_rev     = rev['user']    #this is one tricky way to get the last element, no cleaner way available
+            if latest_rev     != "Mycroft92":  ##If the latest edit is not by me then dont disturb it
+                logging.info("[*]Skipping page :" + card['name']+",Latest edit made by:"+latest_rev['user'])
+                continue
         logging.info("[*]Creating page for:" + card['name'])
         text           = None
         if card['isUnit']:
@@ -101,7 +109,7 @@ for card in card_data['cardData']:
                 pages_created.write(card_link+"\n")
                 logging.info("[*]Successfully created page: "+card_link)
                 successful  +=1
-                
+
             else:
                 pages_failed.write(card_link+"\n")
         nexisting_cnt += 1
