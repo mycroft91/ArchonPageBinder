@@ -1,6 +1,8 @@
 #Author: Mycroft92
 #Date  : 21-July-2017
 #this is used to sub for the rarity image correspondingly. Basic doesnt have an image on wiki
+redirect        = "#REDIRECT [[%(link)s]]"
+
 rarity          = { 'Basic'     :'Basic',
                     'Common'    :'|[[file:crarity.png|center]]',
                     'Rare'      :'|[[file:rrarity.png|center]]',
@@ -148,7 +150,7 @@ spell_template   = """{{Template:Cardinfo}}
 try:
     overwrite      = open("overwrite.txt",'r').readlines()
     overwrite      = [i.strip() for i in overwrite]
-except OSError:
+except IOError:
     overwrite      = []
 ##These listed entities are considered cards by the system but they are not
 exception_list = [  "Zen'Rui, The BlightSpawned",#the page is already present as Zen'Rui, The Blightspawned (lowercase s)
@@ -209,6 +211,13 @@ def ability(des):
         abilities = abilities[2:] #trimming the first ', '
     return abilities
 
+def alternates(link):
+    alts = []
+    alts.append(link.lower())
+    alts.append(link.lower().replace('-',''))
+    alts.append(link.lower().replace("'",''))
+    return set(alts)
+    
 if __name__ == '__main__':
     print ability("<b>Provoke</b><br><b>Zeal</b>: Gains +2 Attack.")
     print ability("<b>Opening Gambit</b>: Give ANY nearby minion +2 Attack, but -2 Health.")
