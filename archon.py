@@ -13,12 +13,16 @@ from itertools import islice
 logging.basicConfig(filename="Archon.log", level=logging.INFO,filemode='w')
 
 #t2k5's card data url
-card_url            = "https://duelyststats.info/scripts/carddata/cardData.json"
+#card_url            = "https://duelyststats.info/scripts/carddata/cardData.json"
+card_url             = "https://duelyststats.info/scripts/carddata/fullCardData.json"
 
 #load it into a python object
 try:
     card_data       = json.loads(urllib2.urlopen(card_url).read())
-    logging.info("[*]Downloaded card data successfully.")
+    ##if reading from a file comment out above and uncomment below
+    #with open("tempData.txt") as json_data:
+    #    card_data        = json.load(json_data)
+    #logging.info("[*]Downloaded card data successfully.")
 except Exception as e:
     logging.error(str(e))
     raise (type(e),e.args)
@@ -68,8 +72,12 @@ for card in card_data['cardData']:
             if latest_rev     != "Mycroft92":  ##If the latest edit is not by me then dont disturb it
                 logging.info("[*]Skipping page :" + card['name']+",Latest edit made by:"+latest_rev['user'])
                 continue
+        if not(card['factionName'] in faction.keys()):
+            logging.info("[*]Skipping page :" + card['name'])
+            continue
         logging.info("[*]Creating page for:" + card['name'])
         text           = None
+
         if card['isUnit']:
              #minion_template
              fill      = {'faction'     : faction[card['factionName']],
@@ -102,6 +110,17 @@ for card in card_data['cardData']:
                           'expansion'   : expansion[card['cardSetName']],
                           'description' : expansion_des.get(card['cardSetName']," ")}
              text      = artifact_template%fill
+        #Bosses need special treatement xD
+        if card['factionName'] == 'Boss':
+             fill      = {'faction'     : faction[card['factionName']],
+                         'cost'        : card['cost'],
+                         'attack'      : card['attack'],
+                         'health'      : card['health'],
+                         'rarity'      : rarity[card['rarityName']],
+                         'ability'     : ability(card['description']),
+                         'expansion'   : expansion[card['cardSetName']],
+                         'description' : card['description']}
+             text      = boss_template%fill
 
         if text:
             result     = page.save(text,'Template Creation for '+card['name'])
@@ -109,7 +128,7 @@ for card in card_data['cardData']:
                 pages_created.write(card_link+"\n")
                 logging.info("[*]Successfully created page: "+card_link)
                 successful  +=1
-
+                time.sleep(1)
             else:
                 pages_failed.write(card_link+"\n")
         nexisting_cnt += 1

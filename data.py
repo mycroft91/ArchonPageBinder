@@ -4,6 +4,7 @@
 redirect        = "#REDIRECT [[%(link)s]]"
 
 rarity          = { 'Basic'     :'Basic',
+                    'Token'     :'Token',
                     'Common'    :'|[[file:crarity.png|center]]',
                     'Rare'      :'|[[file:rrarity.png|center]]',
                     'Epic'      :'|[[file:erarity.png|center]]',
@@ -29,7 +30,8 @@ faction         = { 'Lyonar Kingdoms'    :'[[Lyonar]]',
                     'Abyssian Host'      :'[[Abyssian]]',
                     'Magmar Aspects'     :'[[Magmar]]',
                     'Vanar Kindred'      :'[[Vanar]]',
-                    'Neutral'            :'[[Neutral]]'}
+                    'Neutral'            :'[[Neutral]]',
+                    'Boss'               :'[[Boss]]'}
 
 keywords        = { 'Airdrop'            :'[[Airdrop]]',
                     'Backstab'           :'[[Backstab]]',
@@ -56,6 +58,40 @@ keywords        = { 'Airdrop'            :'[[Airdrop]]',
                     'Stun'               :'[[Stun]]',
                     'Summon Dervish'     :'[[Summon Dervish]]',
                     'Zeal'               :'[[Zeal]]'}
+
+boss_template = """{{Template:Cardinfo}}
+|-
+|'''Faction'''
+|%(faction)s
+|-
+|'''Cost'''
+|%(cost)s
+|-
+|'''Attack'''
+|%(attack)s
+|-
+|'''Health'''
+|%(health)s
+|-
+|'''Rarity'''
+|%(rarity)s
+|-
+|'''Ability'''
+|%(ability)s
+|-
+|'''Expansion'''
+|%(expansion)s
+|-
+|}
+
+
+
+==Boss Ability==
+%(description)s
+
+
+<!-- ArchonBot -->
+"""
 
 minion_template = """{{Template:Cardinfo}}
 |-
@@ -217,7 +253,7 @@ def alternates(link):
     alts.append(link.lower().replace('-',''))
     alts.append(link.lower().replace("'",''))
     return set(alts)
-    
+
 if __name__ == '__main__':
     print ability("<b>Provoke</b><br><b>Zeal</b>: Gains +2 Attack.")
     print ability("<b>Opening Gambit</b>: Give ANY nearby minion +2 Attack, but -2 Health.")
