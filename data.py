@@ -17,7 +17,7 @@ expansion_des   = { 'Core'               :'Core',
                     "Ancient Bonds"      :"[https://news.duelyst.com/duelyst-patch-1-81/ v. 1.81] - added with the [[Ancient Bonds]] expansion.",
                     "Gauntlet Specials"  :"[https://news.duelyst.com/duelyst-patch-1-85/ v 1.85] - added with [[Gauntlet Specials]]"}
 
-expansion       = { 'Core'               :'Core',
+expansion       = { 'Core'               :'[[Core]]',
                     "Shim'Zar"           :"[[Shim'Zar]]",
                     "Unearthed Prophecy" :"[[Unearthed Prophecy]]",
                     "Bloodbound"         :"[[Rise of the Bloodbound]]",
@@ -155,7 +155,12 @@ artifact_template = """{{Template:Cardinfo}}
 
 <!-- ArchonBot -->
 """
+lore_template    = """
 
+==Card Lore==
+%(text)s
+
+"""
 spell_template   = """{{Template:Cardinfo}}
 |-
 |'''Faction'''
@@ -189,29 +194,31 @@ try:
 except IOError:
     overwrite      = []
 ##These listed entities are considered cards by the system but they are not
+
+set_list       = []
 exception_list = [  "Zen'Rui, The BlightSpawned",#the page is already present as Zen'Rui, The Blightspawned (lowercase s)
                     "Mind Control",
                     "Fight!",
                     "Teleport To Shadow Creep",
                     "Bounce Minion Spawn Entity",
-                    "Shadowspawn",
-                    "Abyssal Scar",
+                    #"Shadowspawn",
+                    #"Abyssal Scar",
                     "Teleport",
                     "Riddle",
                     "Activate Battlepet",
                     "Clone Self",
                     "Clone Entity",
                     "Double Attack And Health",
-                    "Kinetic Surge",
-                    "Warbird",
-                    "Seeking Eye",
-                    "Overload",
-                    "Psionic Strike",
-                    "Iron Shroud",
-                    "Arcane Heart",
-                    "Blink",
-                    "Afterglow",
-                    "Roar",
+                    #"Kinetic Surge",
+                    #"Warbird",
+                    #"Seeking Eye",
+                    #"Overload",
+                    #"Psionic Strike",
+                    #"Iron Shroud",
+                    #"Arcane Heart",
+                    #"Blink",
+                    #"Afterglow",
+                    #"Roar",
                     "Assassinate",
                     "Kill Target",
                     "Revive Dead minion",

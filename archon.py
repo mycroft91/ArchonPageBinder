@@ -70,7 +70,7 @@ for card in card_data['cardData']:
             for rev in islice(page.revisions(),1):
                 latest_rev     = rev['user']    #this is one tricky way to get the last element, no cleaner way available
             if latest_rev     != "Mycroft92":  ##If the latest edit is not by me then dont disturb it
-                logging.info("[*]Skipping page :" + card['name']+",Latest edit made by:"+latest_rev['user'])
+                logging.info("[*]Skipping page :" + card['name']+",Latest edit made by:"+latest_rev)
                 continue
         if not(card['factionName'] in faction.keys()):
             logging.info("[*]Skipping page :" + card['name'])
