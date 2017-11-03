@@ -244,6 +244,11 @@ def replace(name):
     temp = name.replace(' ','_').replace('_Of_','_of_').replace('_The_','_the_')
     return temp
 
+def named_replace(name):
+    #replaces  'Of','The' with 'of','the' respectively doesnot affect spaces...needed for handling card names
+    temp = name.replace(' Of ',' of ').replace(' The ',' the ')
+    return temp
+
 def ability(des):
     #ability extraction from card description
     abilities = ''
@@ -258,6 +263,7 @@ def alternates(link):
     alts = []
     alts.append(link.lower())
     alts.append(link.lower().replace('-',''))
+    alts.append(link.lower().replace(',',''))
     alts.append(link.lower().replace("'",''))
     return set(alts)
 

@@ -61,11 +61,24 @@ for card in card_data['cardData']:
     for alt_link in alternates(card_link):
         page           = site.pages[alt_link]
         if not (page.exists):
-            result     = page.save(redirect%{'link':card['name']})
+            result     = page.save(redirect%{'link':named_replace(card['name'])})
             if result['result'] == "Success":
                 link_success.append(alt_link)
             else:
                 link_fail.append(alt_link)
+        else:
+            if page.exists: #this is needed else latest_rev might throw IndexError if page is not present
+                latest_rev = "Mycroft92"
+                for rev in islice(page.revisions(),1):
+                    latest_rev     = rev['user']    #this is one tricky way to get the last element, no cleaner way available
+                if latest_rev     != "Mycroft92":  ##If the latest edit is not by me then dont disturb it
+                    logging.info("[*]Skipping page :" + card['name']+",Latest edit made by:"+latest_rev)
+                    continue
+                result     = page.save(redirect%{'link':named_replace(card['name'])})
+                if result['result'] == "Success":
+                    link_success.append(alt_link)
+                else:
+                    link_fail.append(alt_link)
     if link_success:
         logging.info("[*]Successfully created redirects:"+",".join(link_success))
         pages_created.write(",".join(link_success)+"\n")
