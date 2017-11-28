@@ -125,7 +125,10 @@ for card in card_data['cardData']:
         if text:
             result     = page.save(text,'Template Creation for '+card['name'])
             if result['result'] == 'Success':
-                pages_created.write(card_link+"\n")
+                try:
+                    pages_created.write(card_link+"\n")
+                except UnicodeEncodeError:
+                    logging.info("[-]warning some card text could not be printed onto txt file:"+card_link)
                 logging.info("[*]Successfully created page: "+card_link)
                 successful  +=1
                 time.sleep(1)
