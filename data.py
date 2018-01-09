@@ -91,10 +91,9 @@ boss_template = """{{Template:Cardinfo}}
 ==Boss Ability==
 %(description)s
 
-==Animations==
-{{Template:Animation}}
 <!-- ArchonBot -->
 """
+
 
 minion_template = """{{Template:Cardinfo}}
 |-
@@ -197,8 +196,17 @@ spell_template   = """{{Template:Cardinfo}}
 """
 #special characters in names that the bot cant deal with.
 special_chars = {u'\u03a9': 'Omega'}
-#This forces bot resets
+#defines for animator.py
 
+add_lines = """
+
+==Animations==
+{{Template:Animation}}
+
+%(cat)s
+"""
+
+#This forces bot resets in archon.py
 try:
     overwrite      = open("overwrite.txt",'r').readlines()
     overwrite      = [i.strip() for i in overwrite]
