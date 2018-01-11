@@ -84,7 +84,7 @@ for card in card_data['cardData']:
         elif card['isSpell']:
             anim    = spell_animation_template
         elif card['isArtifact']:
-            anim    = spell_animation_template
+            anim    = artifact_animation_template
         text       += anim
         result     = page.save(text,'Adding animations for '+card['name'])
         if result['result'] == 'Success':

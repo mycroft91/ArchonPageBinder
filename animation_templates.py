@@ -10,6 +10,9 @@ remove_lines               = ["{{Template:Animation}}"
                             ,"==Animations=="
                             ,"{{Category:Minion}}"
                             ,"{{Category:Spell}}"
+                            ,"[[Category:Minion]]"
+                            ,"[[Category:Artifact]]"
+                            ,"[[Category:Spell]]"
                             ,"{{Category:Artifact}}"
                             ,"{{Template:SpellAnimation}}"]
 
@@ -17,17 +20,17 @@ minion_animation_template  = """
 ==Animations==
 {{Template:Animation}}
 
-{{Category:Minion}}
+[[Category:Minion]]
 """
 spell_animation_template   = """
 ==Animations==
 {{Template:SpellAnimation}}
 
-{{Category:Spell}}
+[[Category:Spell]]
 """
 artifact_animation_template   = """
 ==Animations==
 {{Template:SpellAnimation}}
 
-{{Category:Artifact}}
+[[Category:Artifact]]
 """
