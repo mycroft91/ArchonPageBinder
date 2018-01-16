@@ -4,3 +4,4 @@
 *.txt
 *.htm
 */.vscode/*
+.vscode/*
