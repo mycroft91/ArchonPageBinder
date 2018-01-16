@@ -57,6 +57,7 @@ class gifExtract():
 
 #example usage of above class
 cards     = collection()
+#cardNames = [card['name'] for card in cards]
 cardNames = [cards[i]['name'] for i in range(0,100)]
 print cardNames
 gifExtract(cardNames)
