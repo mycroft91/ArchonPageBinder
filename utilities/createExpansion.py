@@ -15,7 +15,7 @@ def createExpansion(name,patch):
     pages_forced  = open("pages_forced.txt", 'w')
     #minions
     for card in minions:
-        ability_cat = "".join(plain_ability(card['description']))
+        ability_cat = "".join([keyword_category%i for i in plain_ability(card['description'])] )
         minion_fill = {'faction': faction[card['factionName']],
             'cost': card['cost'],
             'attack': card['attack'],
@@ -25,9 +25,10 @@ def createExpansion(name,patch):
             'expansion': expansion[card['cardSetName']],
             'description': expansion_des.get(card['cardSetName'], " "),
             'standard':card["isStandard"],
+            'ability' : card['description'],
             'Cfaction': replace(card['factionName']),
             'Cexpansion':replace(plain_expansion[card['cardSetName']])          }
-        if(wiki.createPage(card['link'],(minion_template%minion_fill) + "\n"+ability_cat)):
+        if(wiki.editPage(card['link'],(minion_template%minion_fill) + "\n"+ability_cat)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -42,10 +43,11 @@ def createExpansion(name,patch):
         'rarity': rarity[card['rarityName']],
         'expansion': expansion[card['cardSetName']],
         'description': expansion_des.get(card['cardSetName'], " "),
+        'ability' : card['description'],
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])  }
-        if(wiki.createPage(card['link'], spell_template % spell_fill)):
+        if(wiki.editPage(card['link'], spell_template % spell_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -60,10 +62,11 @@ def createExpansion(name,patch):
         'rarity': rarity[card['rarityName']],
         'expansion': expansion[card['cardSetName']],
         'description': expansion_des.get(card['cardSetName'], " "),
+        'ability' : card['description'],
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])}
-        if(wiki.createPage(card['link'], artifact_template % artifact_fill)):
+        if(wiki.editPage(card['link'], artifact_template % artifact_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")

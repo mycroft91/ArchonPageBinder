@@ -96,6 +96,8 @@ minion_template = """{{Template:Cardinfo}}
 |}
 
 
+==Description==
+%(ability)s
 
 ==Balance Changes==
 %(description)s
@@ -135,6 +137,9 @@ artifact_template = """{{Template:Cardinfo}}
 |-
 |}
 
+==Description==
+%(ability)s
+
 ==Balance Changes==
 %(description)s
 
@@ -173,6 +178,9 @@ spell_template = """{{Template:Cardinfo}}
 |%(standard)s
 |-
 |}
+
+==Description==
+%(ability)s
 
 ==Balance Changes==
 %(description)s
