@@ -5,6 +5,9 @@
 import json
 import urllib2
 import logging
+from defines import unlimited_exp, exception_list
+from helper import replace
+logger = logging.getLogger("__main__")
 
 class data(object):
     def __init__(self,url,debug=True):
@@ -15,54 +18,73 @@ class data(object):
                 self.data).read())['cardData']
             self.index  = 0
             self.max    = len(self.cards)
-            logging.info("[*]Completed reading card data from from "+self.data)
+            self.cards = [i for i in self.cards if not(
+                i['name'] in exception_list)] #removes cards from exception_list
+            self._link_info()
+            self._rotation_info()
+            logger.info("[*]Completed reading card data from from "+self.data)
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise (type(e),e.args)
     
-    def __getitem__(self,index):
-        return self.cards[index]
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        ##This is a python 2.7 method
-        self.index += 1
-        if self.debug:
-            logging.debug(
-                "[*]Returning Card data for:" + self.cards[self.index - 1]
-                ['name'] + " index:" + str(self.index - 1))
-        if self.index == self.max:
-            if self.debug:
-                logging.debug(
-                    "[*]Successfully returned all " + str(self.max) + " cards")
-            raise StopIteration
-        return self.cards[self.index - 1]
+    def _link_info(self):
+        #add the wikilink for each card
+        for card in self.cards:
+            card["link"] = replace(card['name'])
+    
+    def _rotation_info(self):
+        #this should not be called from outside this class
+        #adds the rotation info for a card
+        for card in self.cards:
+            if (card['isLegacy']) or (card['cardSetName'] in unlimited_exp):
+                card['isStandard'] = "false"
+            else:
+                card['isStandard'] = "true"
+    
+    def organize(self,index="name"):
+        if not (index in self.cards[0].keys()):
+            logger.warning("[!]Invalid organize index -%s defaulting to name\n "%index)
+            index  = "name"
+        self.cards = sorted(self.cards,key=lambda k:k[index])
+        return self.cards
+    
+    def getData(self):
+        return self.cards
     
     def dump(self,filename=""):
-        pass
+        if(filename==""):
+            logger.error("[!]Filename for dumping card info cannot be empty!")
+            raise Exception(
+                "[!]Filename for dumping card info cannot be empty!")
+        with open(filename, 'w') as outfile:
+            json.dump(self.cards, outfile)
+    
+    def filter(self,myfilter={},index="name"):
+        #filter data with keys in cardData (look at raw data on T2k5's website)        
+        logger.debug("[*]Filtering cards with %s\n"%str(myfilter))
+        temp   = self.organize(index)
+        warned = False
+        for key in myfilter.keys():
+            if key in self.cards[0].keys():
+                temp = [i for i in temp if i[key]==myfilter[key]]
+            else:
+                if not warned:
+                    logger.warning("[!]key: %s not found in cardlist! Skipping from filter\n"%key)
+                    warned = true
+        return temp
+    
 
-    def __next__(self):
-        ##This makes it works for python 3+ too
-        self.index     += 1
-        if self.debug:
-            logging.debug("[*]Returning Card data for:"+self.cards[self.index-1]['name']+" index:"+str(self.index-1))
-        if self.index ==self.max :
-            if self.debug:
-                logging.debug("[*]Successfully returned all "+str(self.max)+ " cards")
-            raise StopIteration
-        return self.cards[self.index - 1]
 
-
-class collection(data):
+class collectionURL(data):
     #this class is an iterable for collection only data(Data you see in collectuon manager)
     def __init__(self,url="https://duelyststats.info/scripts/carddata/cardData.json"):
-        super(collection,self).__init__(url)
+        super(collectionURL,self).__init__(url)
 
-class fullCollection(data):
+class fullCollectionURL(data):
     #this class is an iterable for all cards the game uses.
     def __init__(
             self,
             url="https://duelyststats.info/scripts/carddata/fullCardData.json"):
-        super(fullCollection, self).__init__(url)
+        super(fullCollectionURL, self).__init__(url)
+
+#in future will implement data generation from JSON dump
