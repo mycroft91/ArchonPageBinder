@@ -56,8 +56,9 @@ class gifExtract():
                 raise (type(e), e.args)
 
 #example usage of above class
-cards     = collection()
+data     = collectionURL()
+cards    = data.filter({'cardSetName':'Mythron'})
 #cardNames = [card['name'] for card in cards]
-cardNames = [cards[i]['name'] for i in range(0,100)]
+cardNames = [card['name'] for card in cards]
 print cardNames
 gifExtract(cardNames)
