@@ -7,7 +7,7 @@ import logging,sys
 
 
 def createExpansion(name,patch):
-    cards         = card_data.collectionURL()
+    cards         = card_data.fullCollectionURL()
     wiki          = wiki_login.wiki()
     minions       = cards.filter({'isUnit': True, 'cardSetName':name})
     pages_created = open("pages_created.txt", 'w')
@@ -28,7 +28,7 @@ def createExpansion(name,patch):
             'ability' : card['description'],
             'Cfaction': replace(card['factionName']),
             'Cexpansion':replace(plain_expansion[card['cardSetName']])          }
-        if(wiki.editPage(card['link'],(minion_template%minion_fill) + "\n"+ability_cat)):
+        if(wiki.createPage(card['link'],(minion_template%minion_fill) + "\n"+ability_cat)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -47,7 +47,7 @@ def createExpansion(name,patch):
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])  }
-        if(wiki.editPage(card['link'], spell_template % spell_fill)):
+        if(wiki.createPage(card['link'], spell_template % spell_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -66,7 +66,7 @@ def createExpansion(name,patch):
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])}
-        if(wiki.editPage(card['link'], artifact_template % artifact_fill)):
+        if(wiki.createPage(card['link'], artifact_template % artifact_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -78,4 +78,4 @@ if __name__ == "__main__":
                         level=logging.DEBUG, filemode='w')
     logger = logging.getLogger(__name__)
     logger.addHandler(logging.StreamHandler(sys.stdout))
-    createExpansion("Mythron","V1.95")
+    createExpansion("Mythron","V1.95fulCard")
