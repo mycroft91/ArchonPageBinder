@@ -4,18 +4,18 @@ This is a bot to create card pages from t2k5's card data(https://duelyststats.in
 Runs with python 2.7+
 
 
-##Requirements:
+## Requirements:
  - mwclient
 
  - logging
 
  - time
 
-##Details:
+## Details:
 The **legacy** folder are scripts that are now obsolete.
-The **utilites/** folder has the important routines. The **utilities/src/** folder has smaller pieces that you use to easily iterate over card data or login into wiki and create/edit pages. The credentials are **NOT** included in the repo. Please contact either mycroft92#9213 or Boronian#2002 on discord for the credentials.
+The **utilites/** folder has the important routines. The **utilities/src/** folder has smaller pieces that you use to easily iterate over card data or login into wiki and create/edit pages. The credentials are **NOT** included in the repo. Please contact either **mycroft92#9213** or **Boronian#2002** on discord for the credentials.
 
-##Misc:
+## Misc:
  - I will try and update src/ modules whenever I can but please follow the coding guidelines so that it is easier for everyone to maintain.
 
  - Ideally it would really help if you can finish a utility script using the modules in the src folder. So that your module is not interfering with others' work.
