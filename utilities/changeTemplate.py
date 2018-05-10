@@ -11,103 +11,54 @@ old_rarity = {'Basic': 'Basic',
           'Epic': '|[[file:erarity.png|center]]',
           'Legendary': '|[[file:lrarity.png|center]]',
               'Mythron': '|[[file:mrarity.png|center]]Mythron'}
-old_minion_template = ["""|'''Ability'''
-|%(ability)s
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|}""", """|'''Ability'''
-|%(ability)s
-|-
-|}""", """|'''Ability'''
-|%(ability)s
-|}"""]
+old_minion_template = ["""|'''Rarity'''
+|%(rarity)s
+|-""",
+"""|'''Rarity'''
+|Common
+|-"""]
 
-new_minion_template = """|'''Ability'''
-|%(ability)s
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|'''Standard'''
-|%(standard)s
-|-
-|}
+new_minion_template = """|'''Rarity'''
+|%(rarity)s
+|-"""
 
+old_artifact_template = [""""|'''Rarity'''
+|%(rarity)s
+|-""",
+"""|'''Rarity'''
+|Common
+|-"""]
 
-==Description==
-%(ability)s"""
+new_artifact_template = """|'''Rarity'''
+|%(rarity)s
+|-"""
 
-old_artifact_template = ["""|'''Ability'''
-|
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|}""", """|'''Ability'''
-|
-|-
-|}""", """|'''Ability'''
-|%(ability)s
-|}"""]
+old_spell_template = ["""|'''Rarity'''
+|%(rarity)s
+|-""",
+"""|'''Rarity'''
+|Common
+|-"""]
 
-new_artifact_template = """|'''Ability'''
-|%(ability)s
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|'''Standard'''
-|%(standard)s
-|-
-|}
+new_spell_template = """|'''Rarity'''
+|%(rarity)s
+|-"""
 
-==Description==
-%(ability)s"""
-
-old_spell_template = ["""|'''Ability'''
-|
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|}""", """|'''Ability'''
-|
-|-
-|}""" , """|'''Ability'''
-|%(ability)s
-|}"""]
-
-new_spell_template ="""|'''Ability'''
-|%(ability)s
-|-
-|'''Expansion'''
-|%(expansion)s
-|-
-|'''Standard'''
-|%(standard)s
-|-
-|}
-
-==Description==
-%(ability)s"""
-
-categories = """[[Category:%(Cfaction)s]]
-[[Category:%(Cexpansion)s]]"""
 
 def getOldCardText(card):
     text = []
+    if card['factionName'] == "Tutorial Teacher":
+        return []
     if card['isUnit']:
-             #minion_template
         fill = {'faction': faction[card['factionName']],
                 'cost': card['cost'],
                 'attack': card['attack'],
                 'health': card['health'],
                 'rarity': old_rarity[card['rarityName']],
-                'ability': ability(card['description']),
+                'ability': card['description'],
                 'expansion': expansion[card['cardSetName']],
                 'description': expansion_des.get(card['cardSetName'], " ")}
+        print fill['rarity']
         for t in old_minion_template:
             text.append(t%fill)
     
@@ -119,7 +70,9 @@ def getOldCardText(card):
                 'health': card['health'],
                 'rarity': old_rarity[card['rarityName']],
                 'expansion': expansion[card['cardSetName']],
+                'ability': card['description'],
                 'description': expansion_des.get(card['cardSetName'], " ")}
+        print fill['rarity']
         for t in old_spell_template:
             text.append(t % fill)
 
@@ -131,7 +84,9 @@ def getOldCardText(card):
                 'health': card['health'],
                 'rarity': old_rarity[card['rarityName']],
                 'expansion': expansion[card['cardSetName']],
+                'ability' :card['description'],
                 'description': expansion_des.get(card['cardSetName'], " ")}
+        print fill['rarity']
         for t in old_artifact_template:
             text.append(t % fill)
     return text  
@@ -139,6 +94,8 @@ def getOldCardText(card):
 
 def getNewCardText(card):
     text = ""
+    if card['factionName'] == "Tutorial Teacher":
+        return ""
     if card['isUnit'] :
         ability_cat = "".join([keyword_category %
                                i for i in plain_ability(card['description'])])
@@ -147,11 +104,11 @@ def getNewCardText(card):
                        'attack': card['attack'],
                        'health': card['health'],
                        'rarity': rarity[card['rarityName']],
-                       'ability': ability(card['description']),
+                       #'ability': linkify(ability(card['description'])),
                        'expansion': expansion[card['cardSetName']],
                        'description': expansion_des.get(card['cardSetName'], " "),
                        'standard': card["isStandard"],
-                       'ability': card['description'],
+                       'ability': linkify(card['description']),
                        'Cfaction': replace(card['factionName']),
                        'Cexpansion': replace(plain_expansion[card['cardSetName']])}
         text = new_minion_template%minion_fill
@@ -163,7 +120,7 @@ def getNewCardText(card):
                       'rarity': rarity[card['rarityName']],
                       'expansion': expansion[card['cardSetName']],
                       'description': expansion_des.get(card['cardSetName'], " "),
-                      'ability': card['description'],
+                      'ability': linkify(card['description']),
                       'standard': card["isStandard"],
                       'Cfaction': replace(card['factionName']),
                       'Cexpansion': replace(plain_expansion[card['cardSetName']])}
@@ -177,7 +134,7 @@ def getNewCardText(card):
                          'rarity': rarity[card['rarityName']],
                          'expansion': expansion[card['cardSetName']],
                          'description': expansion_des.get(card['cardSetName'], " "),
-                         'ability': card['description'],
+                         'ability': linkify(card['description']),
                          'standard': card["isStandard"],
                          'Cfaction': replace(card['factionName']),
                          'Cexpansion': replace(plain_expansion[card['cardSetName']])}
@@ -189,19 +146,23 @@ def changeTemplate():
     pages_failed = open("pages_failed.txt", 'w')
     cards = card_data.fullCollectionURL()
     wiki  = wiki_login.wiki()
-    
-    for card in cards.getData():
+        
+    for card in cards.filter({"prismatic":False}):
         text = wiki.getPage(card['link'])
+        copy = text
         old  = getOldCardText(card)
         new  = getNewCardText(card)
         if(old):
             for i in old:
                 print text.find(i)
                 text = text.replace(i,new) 
-            text = text+categories % {'Cfaction': replace(card['factionName']),
-                                      'Cexpansion': replace(plain_expansion[card['cardSetName']])}
+            if(copy == text):
+                continue
             if(wiki.editPage(card['link'],text,force=True)):
-                pages_created.write(card['link']+"\n")
+                try:
+                    pages_created.write(card['link']+"\n")
+                except Exception as e:
+                    logger.info("[!]Couldn't write the url of some card")
             else:
                 pages_failed.write(card['link']+"\n")
 

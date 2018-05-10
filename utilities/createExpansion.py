@@ -21,11 +21,10 @@ def createExpansion(name,patch):
             'attack': card['attack'],
             'health': card['health'],
             'rarity': rarity[card['rarityName']],
-            'ability': ability(card['description']),
             'expansion': expansion[card['cardSetName']],
             'description': expansion_des.get(card['cardSetName'], " "),
             'standard':card["isStandard"],
-            'ability' : card['description'],
+            'ability' : linkify(card['description']),
             'Cfaction': replace(card['factionName']),
             'Cexpansion':replace(plain_expansion[card['cardSetName']])          }
         if(wiki.createPage(card['link'],(minion_template%minion_fill) + "\n"+ability_cat)):
@@ -43,7 +42,7 @@ def createExpansion(name,patch):
         'rarity': rarity[card['rarityName']],
         'expansion': expansion[card['cardSetName']],
         'description': expansion_des.get(card['cardSetName'], " "),
-        'ability' : card['description'],
+        'ability' : linkify(card['description']),
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])  }
@@ -62,7 +61,7 @@ def createExpansion(name,patch):
         'rarity': rarity[card['rarityName']],
         'expansion': expansion[card['cardSetName']],
         'description': expansion_des.get(card['cardSetName'], " "),
-        'ability' : card['description'],
+        'ability' : linkify(card['description']),
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])}
