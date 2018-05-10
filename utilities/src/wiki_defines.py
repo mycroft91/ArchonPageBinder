@@ -127,7 +127,7 @@ artifact_template = """{{Template:Cardinfo}}
 |%(rarity)s
 |-
 |'''Ability'''
-|
+|%(ability)s
 |-
 |'''Expansion'''
 |%(expansion)s
@@ -169,7 +169,7 @@ spell_template = """{{Template:Cardinfo}}
 |%(rarity)s
 |-
 |'''Ability'''
-|
+|%(ability)s
 |-
 |'''Expansion'''
 |%(expansion)s
@@ -195,5 +195,86 @@ spell_template = """{{Template:Cardinfo}}
 [[Category:%(Cexpansion)s]]
 """
 
+##templates for faction pages
 
 
+rarity_img = {
+    'Basic'     : 'Basic',
+    'Token'     : 'Token',
+    'Common'    : 'crarity.png',
+    'Rare'      : 'rrarity.png',
+    'Epic'      : 'erarity.png',
+    'Legendary' : 'lrarity.png',
+    'Mythron'   : 'mrarity.png'
+}
+
+minion_start = """== Minions ==
+{| class="wikitable collapsible sortable" style="text-align: center; width: 70%;"
+!Image
+!Name
+!Rarity
+!Type
+!Cost
+!Attack
+!Health
+!Ability
+!Set
+|-
+"""
+minion_fill = """
+|[[File:%(name)s.png|160px|link=%(name)s]] || [[%(name)s]] || [[Image:%(irare)s|40px|]]<br>%(rarity)s || Minion || %(cost)s || %(attack)s || %(health)s || %(ability)s
+|{{set|%(set)s}}
+|-
+"""
+minion_end = "|}"
+
+artifact_start = """== Artifacts ==
+{| class="wikitable collapsible sortable" style="text-align: center; width: 70%;"
+!Image
+!Name
+!Rarity
+!Type
+!Cost
+!Effect
+!
+|-"""
+artifact_fill = """ |[[File:%(name)s.png|160px|link=%(name)s]] || [[%(name)s]] || [[Image:%(irare)s|40px|]]<br>%(rarity)s|| Artifact || %(cost)s || %(ability)s
+|{{set|%(set)s}}
+|-"""
+artifact_end  = "|}"
+
+spell_start = """
+== Spells ==
+{| class="wikitable collapsible sortable" style="text-align: center; width: 70%;"
+!Image
+!Name
+!Rarity
+!Type
+!Cost
+!Effect
+!Set
+|-"""
+spell_fill = """
+|[[File:%(name)s.png|160px|link=%(name)s]] || [[%(name)s]] || [[Image:%(irare)s|40px|]]<br>%(rarity)s || Spell || %(cost)s || %(ability)s
+|{{set|%(set)s}}
+|- """
+spell_end  = "|}"
+
+token_start = """ 
+== Tokens ==
+{| class="wikitable collapsible sortable" style="text-align: center; width: 70%;"
+!Image
+!Name
+!Type
+!Cost
+!Attack
+!Health
+!Summoned from
+!Ability
+!Set
+|-"""
+
+#token fill is minion_fill for minions, spell_fill for spell etc..
+token_end  = "|}"
+
+faction_end = "[[Category: Faction]]"

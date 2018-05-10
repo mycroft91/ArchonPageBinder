@@ -64,6 +64,8 @@ class data(object):
         logger.debug("[*]Filtering cards with %s\n"%str(myfilter))
         temp   = self.organize(index)
         warned = False
+        if myfilter == {}:
+            return temp
         for key in myfilter.keys():
             if key in self.cards[0].keys():
                 temp = [i for i in temp if i[key]==myfilter[key]]

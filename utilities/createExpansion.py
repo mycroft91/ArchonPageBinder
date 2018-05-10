@@ -47,7 +47,7 @@ def createExpansion(name,patch):
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])  }
-        if(wiki.createPage(card['link'], spell_template % spell_fill)):
+        if(wiki.editPage(card['link'], spell_template % spell_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")
@@ -66,7 +66,7 @@ def createExpansion(name,patch):
         'standard': card["isStandard"],
         'Cfaction': replace(card['factionName']),
         'Cexpansion': replace(plain_expansion[card['cardSetName']])}
-        if(wiki.createPage(card['link'], artifact_template % artifact_fill)):
+        if(wiki.editPage(card['link'], artifact_template % artifact_fill)):
             pages_created.write(card["link"]+"\n")
         else:
             pages_failed.write(card["link"]+"\n")

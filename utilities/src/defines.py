@@ -8,17 +8,17 @@ special_chars = {u'\u03a9': 'Omega'}
 
 expansion       = { 'Core'               :'[[Core]]',
                     "Shim'Zar"           :"[[Shim'Zar]]",
-                    "Unearthed Prophecy" :"[[Unearthed Prophecy]]",
-                    "Bloodbound"         :"[[Rise of the Bloodbound]]",
-                    "Ancient Bonds"      :"[[Ancient Bonds]]",
+                    "Unearthed"          :"[[Unearthed Prophecy]]",
+                    #"Bloodbound"         :"[[Rise of the Bloodbound]]",
+                    "Ancients"           :"[[Ancient Bonds]]",
                     "Immortal"           :"[[Immortal Vanguard]]",
                     "Gauntlet Specials"  :"[[Gauntlet Specials]]",
                     "Mythron"            :"[[Trials of Mythron]]"}
 plain_expansion = { 'Core'               :'Core',
                     "Shim'Zar"           :"Shim'Zar",
-                    "Unearthed Prophecy" :"Unearthed Prophecy",
+                    "Unearthed"          :"Unearthed Prophecy",
                     "Bloodbound"         :"Rise of the Bloodbound",
-                    "Ancient Bonds"      :"Ancient Bonds",
+                    "Ancients"           :"Ancient Bonds",
                     "Immortal"           :"Immortal Vanguard",
                     "Gauntlet Specials"  :"Gauntlet Specials",
                     "Mythron"            :"Trials of Mythron"}
@@ -56,7 +56,9 @@ keywords        = { 'Airdrop'            :'[[Airdrop]]',
                     'Shadow Creep'       :'[[Shadow Creep]]',
                     'Stun'               :'[[Stun]]',
                     'Summon Dervish'     :'[[Summon Dervish]]',
-                    'Zeal'               :'[[Zeal]]'
+                    'Zeal'               :'[[Zeal]]',
+                    'Trial'              :'[[Trial]]',
+                    'Destiny'            :'[[Destiny]]'
 }
 
 #Cards to exclude from full data

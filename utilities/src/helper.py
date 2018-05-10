@@ -13,6 +13,10 @@ def named_replace(name):
     temp = name.replace(' Of ', ' of ').replace(' The ', ' the ')
     return temp
 
+def linkify(des):
+    for key in keywords.keys():
+        des = des.replace(key,keywords[key])
+    return des
 
 def ability(des):
     #ability extraction from card description
